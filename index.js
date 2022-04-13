@@ -41,8 +41,6 @@ Toolkit.run(async tools => {
     version = 'major'
   } else if (messages.some(message => minorWords.some(word => message.includes(word)))) {
     version = 'minor'
-  } else if (messages.some(message => noBumpWords.some(word => message.includes(word)))) {
-    version = null  //@dermatologist
   } else if (messages.some(message => preReleaseWords.some(word => {
     if (message.includes(word)) {
       foundWord = word
@@ -60,6 +58,10 @@ Toolkit.run(async tools => {
     }
   }
 
+  if (messages.some(message => noBumpWords.some(word => message.includes(word)))) {
+    version = null  //@dermatologist
+  }
+  
   if (version === null) {
     tools.exit.success('No version keywords found, skipping bump.')
     return
