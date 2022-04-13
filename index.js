@@ -29,11 +29,12 @@ Toolkit.run(async tools => {
   const majorWords = process.env['INPUT_MAJOR-WORDING'].split(',')
   const minorWords = process.env['INPUT_MINOR-WORDING'].split(',')
   const preReleaseWords = process.env['INPUT_RC-WORDING'].split(',')
+  const noBumpWords = ['bump', 'deps'] // ignore dependabot commits
 
   // if patch words aren't specified, any commit message qualifies as a patch
   const patchWords = process.env['INPUT_PATCH-WORDING'] ? process.env['INPUT_PATCH-WORDING'].split(',') : null
-
-  let version = process.env.INPUT_DEFAULT || 'patch'
+  // Set default to null @dermatologist
+  let version = process.env.INPUT_DEFAULT || null
   let foundWord = null
 
   if (messages.some(
@@ -41,6 +42,8 @@ Toolkit.run(async tools => {
     version = 'major'
   } else if (messages.some(message => minorWords.some(word => message.includes(word)))) {
     version = 'minor'
+  } else if (messages.some(message => noBumpWords.some(word => message.includes(word)))) {
+    version = null  //@dermatologist
   } else if (messages.some(message => preReleaseWords.some(word => {
     if (message.includes(word)) {
       foundWord = word
