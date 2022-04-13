@@ -33,8 +33,7 @@ Toolkit.run(async tools => {
 
   // if patch words aren't specified, any commit message qualifies as a patch
   const patchWords = process.env['INPUT_PATCH-WORDING'] ? process.env['INPUT_PATCH-WORDING'].split(',') : null
-  // Set default to null @dermatologist
-  let version = process.env.INPUT_DEFAULT || null
+  let version = process.env.INPUT_DEFAULT || 'patch'
   let foundWord = null
 
   if (messages.some(
