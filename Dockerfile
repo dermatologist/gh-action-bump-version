@@ -8,7 +8,8 @@
 #
 # You can specify a version:
 # FROM node:10-slim
-FROM node:14.14-slim
+# FROM node:14.14-slim
+FROM node:14.21.3-slim
 
 # Labels for GitHub to read your action
 LABEL "com.github.actions.name"="Automated version bump for npm packages."
